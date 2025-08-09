@@ -8,15 +8,12 @@ const FichaPaciente = () => {
     temperatura: '36.5'
   });
   const [tempoRestante, setTempoRestante] = useState(0); // em segundos
-  const [prioridade, setPrioridade] = useState('verde');
 
   useEffect(() => {
     // Recupera dados da triagem
     const triagemData = localStorage.getItem('triagemData');
     if (triagemData) {
       const dados = JSON.parse(triagemData);
-      // Define uma prioridade padrão já que não temos mais avaliação automática
-      setPrioridade('verde'); // Padrão: pouco urgente
       
       // Define um tempo padrão de 40 minutos
       const tempoTotalSegundos = 40 * 60; // 40 minutos em segundos
@@ -25,40 +22,12 @@ const FichaPaciente = () => {
 
     // Simula dados vitais da pulseira (em um caso real, viriam da API)
     const gerarDadosVitais = () => {
-      // Gera valores aleatórios dentro de faixas normais/alteradas baseado na prioridade
-      let pressaoSist, pressaoDias, bpm, saturacao, temperatura;
-      
-      if (prioridade === 'vermelho') {
-        pressaoSist = Math.floor(Math.random() * 40) + 160; // 160-200
-        pressaoDias = Math.floor(Math.random() * 20) + 100; // 100-120
-        bpm = Math.floor(Math.random() * 40) + 120; // 120-160
-        saturacao = Math.floor(Math.random() * 5) + 85; // 85-90
-        temperatura = (Math.random() * 3 + 38).toFixed(1); // 38-41
-      } else if (prioridade === 'laranja') {
-        pressaoSist = Math.floor(Math.random() * 35) + 150; // 150-185
-        pressaoDias = Math.floor(Math.random() * 18) + 95; // 95-113
-        bpm = Math.floor(Math.random() * 35) + 110; // 110-145
-        saturacao = Math.floor(Math.random() * 5) + 88; // 88-93
-        temperatura = (Math.random() * 2.5 + 37.5).toFixed(1); // 37.5-40
-      } else if (prioridade === 'amarelo') {
-        pressaoSist = Math.floor(Math.random() * 30) + 130; // 130-160
-        pressaoDias = Math.floor(Math.random() * 15) + 85; // 85-100
-        bpm = Math.floor(Math.random() * 25) + 90; // 90-115
-        saturacao = Math.floor(Math.random() * 4) + 94; // 94-98
-        temperatura = (Math.random() * 1.5 + 37).toFixed(1); // 37-38.5
-      } else if (prioridade === 'verde') {
-        pressaoSist = Math.floor(Math.random() * 25) + 115; // 115-140
-        pressaoDias = Math.floor(Math.random() * 15) + 75; // 75-90
-        bpm = Math.floor(Math.random() * 20) + 70; // 70-90
-        saturacao = Math.floor(Math.random() * 3) + 96; // 96-99
-        temperatura = (Math.random() * 1 + 36.2).toFixed(1); // 36.2-37.2
-      } else { // azul
-        pressaoSist = Math.floor(Math.random() * 20) + 110; // 110-130
-        pressaoDias = Math.floor(Math.random() * 15) + 70; // 70-85
-        bpm = Math.floor(Math.random() * 15) + 60; // 60-75
-        saturacao = Math.floor(Math.random() * 2) + 98; // 98-100
-        temperatura = (Math.random() * 0.8 + 36).toFixed(1); // 36-36.8
-      }
+      // Gera valores aleatórios dentro de faixas normais
+      const pressaoSist = Math.floor(Math.random() * 25) + 115; // 115-140
+      const pressaoDias = Math.floor(Math.random() * 15) + 75; // 75-90
+      const bpm = Math.floor(Math.random() * 20) + 70; // 70-90
+      const saturacao = Math.floor(Math.random() * 3) + 96; // 96-99
+      const temperatura = (Math.random() * 1 + 36.2).toFixed(1); // 36.2-37.2
 
       setDadosVitais({
         pressao: `${pressaoSist}/${pressaoDias}`,
@@ -69,7 +38,7 @@ const FichaPaciente = () => {
     };
 
     gerarDadosVitais();
-  }, [prioridade]);
+  }, []);
 
   // Cronômetro regressivo
   useEffect(() => {
@@ -91,40 +60,12 @@ const FichaPaciente = () => {
   useEffect(() => {
     const oscilarDados = setInterval(() => {
       setDadosVitais(prevDados => {
-        // Oscilações baseadas em valores normais para cada prioridade
-        let baseBpm, baseSaturacao, baseTemperatura, basePressaoSist, basePressaoDias;
-        
-        if (prioridade === 'vermelho') {
-          baseBpm = 140;
-          baseSaturacao = 87;
-          baseTemperatura = 39.5;
-          basePressaoSist = 180;
-          basePressaoDias = 110;
-        } else if (prioridade === 'laranja') {
-          baseBpm = 127;
-          baseSaturacao = 90;
-          baseTemperatura = 38.7;
-          basePressaoSist = 167;
-          basePressaoDias = 104;
-        } else if (prioridade === 'amarelo') {
-          baseBpm = 102;
-          baseSaturacao = 96;
-          baseTemperatura = 37.7;
-          basePressaoSist = 145;
-          basePressaoDias = 92;
-        } else if (prioridade === 'verde') {
-          baseBpm = 80;
-          baseSaturacao = 97;
-          baseTemperatura = 36.7;
-          basePressaoSist = 127;
-          basePressaoDias = 82;
-        } else { // azul
-          baseBpm = 67;
-          baseSaturacao = 99;
-          baseTemperatura = 36.4;
-          basePressaoSist = 120;
-          basePressaoDias = 77;
-        }
+        // Valores base normais
+        const baseBpm = 80;
+        const baseSaturacao = 97;
+        const baseTemperatura = 36.7;
+        const basePressaoSist = 127;
+        const basePressaoDias = 82;
 
         // Pequenas variações aleatórias para simular oscilação real
         const bpmVariacao = Math.floor(Math.random() * 6) - 3; // ±3
@@ -133,11 +74,11 @@ const FichaPaciente = () => {
         const pressaoSistVariacao = Math.floor(Math.random() * 8) - 4; // ±4
         const pressaoDiasVariacao = Math.floor(Math.random() * 6) - 3; // ±3
 
-        const novoBpm = Math.max(50, Math.min(200, baseBpm + bpmVariacao));
-        const novaSaturacao = Math.max(80, Math.min(100, baseSaturacao + saturacaoVariacao));
-        const novaTemperatura = Math.max(35, Math.min(42, baseTemperatura + temperaturaVariacao));
-        const novaPressaoSist = Math.max(80, Math.min(220, basePressaoSist + pressaoSistVariacao));
-        const novaPressaoDias = Math.max(40, Math.min(130, basePressaoDias + pressaoDiasVariacao));
+        const novoBpm = Math.max(65, Math.min(95, baseBpm + bpmVariacao));
+        const novaSaturacao = Math.max(95, Math.min(100, baseSaturacao + saturacaoVariacao));
+        const novaTemperatura = Math.max(36, Math.min(37.5, baseTemperatura + temperaturaVariacao));
+        const novaPressaoSist = Math.max(110, Math.min(140, basePressaoSist + pressaoSistVariacao));
+        const novaPressaoDias = Math.max(70, Math.min(90, basePressaoDias + pressaoDiasVariacao));
 
         return {
           pressao: `${novaPressaoSist}/${novaPressaoDias}`,
@@ -149,24 +90,13 @@ const FichaPaciente = () => {
     }, 3000); // Atualiza a cada 3 segundos
 
     return () => clearInterval(oscilarDados);
-  }, [prioridade]);
+  }, []);
 
   // Formatar tempo para MM:SS
   const formatarTempo = (segundos) => {
     const minutos = Math.floor(segundos / 60);
     const segundosRestantes = segundos % 60;
     return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
-  };
-
-  const getPrioridadeCor = () => {
-    switch (prioridade) {
-      case 'vermelho': return '#d13636';
-      case 'laranja': return '#ff6b35';
-      case 'amarelo': return '#ffa500';
-      case 'verde': return '#28a745';
-      case 'azul': return '#3a7bc8';
-      default: return '#ffa500'; // padrão amarelo (moderado)
-    }
   };
 
   return (
@@ -192,73 +122,6 @@ const FichaPaciente = () => {
       </div>
 
       <div className="divider"></div>
-
-      {/* Card de Classificação de Prioridade */}
-      <div className="data-card" style={{ 
-        background: `linear-gradient(135deg, ${getPrioridadeCor()}15 0%, #ffffff 100%)`,
-        border: `3px solid ${getPrioridadeCor()}`,
-        marginBottom: '20px',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center',
-          gap: '12px',
-          marginBottom: '8px'
-        }}>
-          <div style={{ 
-            width: '24px',
-            height: '24px',
-            backgroundColor: getPrioridadeCor(),
-            borderRadius: '50%',
-            animation: 'pulse 2s infinite',
-            boxShadow: `0 0 10px ${getPrioridadeCor()}50`
-          }} />
-          <div style={{ 
-            fontSize: '32px',
-            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
-          }}>
-            {prioridade === 'vermelho' ? '🚨' : 
-             prioridade === 'laranja' ? '⚠️' : 
-             prioridade === 'amarelo' ? '⏰' : 
-             prioridade === 'verde' ? '✅' : '📋'}
-          </div>
-        </div>
-        <div className="data-label">classificação</div>
-        <div className="data-value" style={{ 
-          color: getPrioridadeCor(),
-          fontSize: '24px',
-          fontWeight: '900',
-          textTransform: 'uppercase',
-          textShadow: `0 1px 2px ${getPrioridadeCor()}30`
-        }}>
-          {prioridade === 'vermelho' ? 'EMERGÊNCIA' : 
-           prioridade === 'laranja' ? 'MUITO URGENTE' : 
-           prioridade === 'amarelo' ? 'MODERADO' : 
-           prioridade === 'verde' ? 'POUCO URGENTE' : 'NÃO URGENTE'}
-        </div>
-        <div style={{ 
-          fontSize: '12px', 
-          color: getPrioridadeCor(), 
-          fontWeight: '600',
-          marginTop: '4px'
-        }}>
-          {prioridade === 'vermelho' ? 'RISCO IMINENTE' : 
-           prioridade === 'laranja' ? 'ATENDIMENTO EM 10 MIN' : 
-           prioridade === 'amarelo' ? 'ATENDIMENTO EM 50 MIN' : 
-           prioridade === 'verde' ? 'ATENDIMENTO EM 2H' : 'ATENDIMENTO EM 4H'}
-        </div>
-        <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          height: '4px',
-          background: `linear-gradient(90deg, ${getPrioridadeCor()} 0%, ${getPrioridadeCor()}80 100%)`,
-          width: '100%'
-        }} />
-      </div>
 
       <div className={`data-card ${tempoRestante <= 300 && tempoRestante > 0 ? 'countdown-urgent' : ''}`} style={{ 
         background: tempoRestante <= 300 ? 'linear-gradient(135deg, #ffebee 0%, #ffffff 100%)' : 'linear-gradient(135deg, #f8f9fc 0%, #ffffff 100%)', 
