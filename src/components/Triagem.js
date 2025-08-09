@@ -18,8 +18,25 @@ const Triagem = () => {
   // Funções de gravação de áudio
   const startRecording = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 44100
+        }
+      });
+      
+      // Escolhe o melhor formato disponível
+      let options = {};
+      if (MediaRecorder.isTypeSupported('audio/webm')) {
+        options = { mimeType: 'audio/webm' };
+      } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+        options = { mimeType: 'audio/mp4' };
+      } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
+        options = { mimeType: 'audio/ogg' };
+      }
+      
+      const mediaRecorder = new MediaRecorder(stream, options);
       mediaRecorderRef.current = mediaRecorder;
       
       const chunks = [];
@@ -28,7 +45,9 @@ const Triagem = () => {
       };
       
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunks, { type: 'audio/wav' });
+        // Usa o tipo MIME que o MediaRecorder realmente suporta
+        const mimeType = mediaRecorder.mimeType || 'audio/webm';
+        const blob = new Blob(chunks, { type: mimeType });
         setAudioBlob(blob);
         setAudioUrl(URL.createObjectURL(blob));
         
@@ -51,9 +70,16 @@ const Triagem = () => {
     }
   };
 
-  const playAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.play();
+  const playAudio = async () => {
+    if (audioRef.current && audioUrl) {
+      try {
+        // Para garantir que o áudio seja carregado
+        audioRef.current.currentTime = 0;
+        await audioRef.current.play();
+      } catch (error) {
+        console.error('Erro ao reproduzir áudio:', error);
+        alert('Erro ao reproduzir o áudio. Tente gravar novamente.');
+      }
     }
   };
 
@@ -329,7 +355,17 @@ const Triagem = () => {
                       🔄 Gravar Novo
                     </button>
                   </div>
-                  <audio ref={audioRef} src={audioUrl} style={{ display: 'none' }} />
+                  <audio 
+                    ref={audioRef} 
+                    src={audioUrl} 
+                    preload="auto"
+                    controls={false}
+                    style={{ display: 'none' }}
+                    onError={(e) => {
+                      console.error('Erro no elemento de áudio:', e);
+                      alert('Erro ao carregar o áudio. Tente gravar novamente.');
+                    }}
+                  />
                 </div>
               )}
             </div>
