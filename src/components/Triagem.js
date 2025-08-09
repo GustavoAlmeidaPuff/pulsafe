@@ -418,7 +418,7 @@ const Triagem = () => {
               }}>
                 🥛
               </div>
-              Tem intolerância à algum alimento?
+              Tem <span style={{ color: '#d13636', fontWeight: '700' }}>intolerância</span> à algum alimento?
             </span>
           </div>
           
