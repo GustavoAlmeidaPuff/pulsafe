@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Triagem = () => {
   const [sintomas, setSintomas] = useState('');
+  const [tempoSintomas, setTempoSintomas] = useState('');
   const [alergias, setAlergias] = useState('');
   const [intolerancia, setIntolerancia] = useState('');
   const [temAlergias, setTemAlergias] = useState(false);
@@ -128,6 +129,7 @@ const Triagem = () => {
     // Salva os dados da triagem
     const dadosTriagem = {
       sintomas,
+      tempoSintomas,
       sintomasAudio: audioBlob ? 'Áudio gravado' : null,
       alergias,
       intolerancia,
@@ -370,6 +372,44 @@ const Triagem = () => {
               )}
             </div>
           )}
+        </div>
+
+        <div className="form-group">
+          <div className="question-text">
+            <span style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+              <div style={{ 
+                fontSize: '24px',
+                background: 'linear-gradient(135deg, #6c63ff 0%, #5a52d5 100%)',
+                borderRadius: '12px',
+                padding: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                ⏰
+              </div>
+              Há quanto tempo você está sentindo isso?
+            </span>
+          </div>
+          
+          <input
+            type="text"
+            className="form-input"
+            placeholder="Ex: 2 dias, 1 semana, algumas horas..."
+            value={tempoSintomas}
+            onChange={(e) => setTempoSintomas(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '12px 16px',
+              borderRadius: '12px',
+              border: '2px solid #e8ecef',
+              fontSize: '16px',
+              transition: 'border-color 0.3s ease',
+              boxSizing: 'border-box'
+            }}
+            onFocus={(e) => e.target.style.borderColor = '#6c63ff'}
+            onBlur={(e) => e.target.style.borderColor = '#e8ecef'}
+          />
         </div>
 
         <div className="form-group">
