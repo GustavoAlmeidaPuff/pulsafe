@@ -15,11 +15,11 @@ const FichaPaciente = () => {
     const triagemData = localStorage.getItem('triagemData');
     if (triagemData) {
       const dados = JSON.parse(triagemData);
-      setPrioridade(dados.prioridade);
+      // Define uma prioridade padrão já que não temos mais avaliação automática
+      setPrioridade('verde'); // Padrão: pouco urgente
       
-      // Converte tempo estimado para segundos
-      const [minutos, segundos] = dados.tempoEstimado.split(':').map(Number);
-      const tempoTotalSegundos = (minutos * 60) + segundos;
+      // Define um tempo padrão de 40 minutos
+      const tempoTotalSegundos = 40 * 60; // 40 minutos em segundos
       setTempoRestante(tempoTotalSegundos);
     }
 
