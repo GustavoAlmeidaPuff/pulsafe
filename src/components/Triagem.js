@@ -151,7 +151,7 @@ const Triagem = () => {
               }}>
                 🤒
               </div>
-              O que você está <span style={{ color: '#d13636', fontWeight: '700' }}>sentindo</span>?
+              O que você está entindo?
             </span>
           </div>
 
@@ -350,7 +350,7 @@ const Triagem = () => {
               }}>
                 💊
               </div>
-              Tem <span style={{ color: '#d13636', fontWeight: '700' }}>alergia</span> à algum medicamento?
+              Tem alergias à algum medicamento?
             </span>
           </div>
           
@@ -418,7 +418,7 @@ const Triagem = () => {
               }}>
                 🥛
               </div>
-              Tem <span style={{ color: '#d13636', fontWeight: '700' }}>intolerância</span> à algum alimento?
+              Tem intolerância à algum alimento?
             </span>
           </div>
           
