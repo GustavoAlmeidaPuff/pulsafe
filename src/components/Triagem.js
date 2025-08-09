@@ -8,6 +8,8 @@ const Triagem = () => {
   const [intolerancia, setIntolerancia] = useState('');
   const [temAlergias, setTemAlergias] = useState(false);
   const [temIntolerancia, setTemIntolerancia] = useState(false);
+  const [doencasPreExistentes, setDoencasPreExistentes] = useState('');
+  const [temDoencasPreExistentes, setTemDoencasPreExistentes] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
@@ -133,6 +135,7 @@ const Triagem = () => {
       sintomasAudio: audioBlob ? 'Áudio gravado' : null,
       alergias,
       intolerancia,
+      doencasPreExistentes,
       prioridade,
       tempoEstimado,
       timestamp: new Date().toISOString()
@@ -543,6 +546,74 @@ const Triagem = () => {
                 minHeight: '60px',
                 animation: 'fadeIn 0.3s ease',
                 border: '2px solid #4ecdc4'
+              }}
+            />
+          )}
+        </div>
+
+        <div className="form-group">
+          <div className="question-text">
+            <span style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+              <div style={{ 
+                fontSize: '24px',
+                background: 'linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%)',
+                borderRadius: '12px',
+                padding: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                🏥
+              </div>
+              Tem alguma doença pré-existente?
+            </span>
+          </div>
+          
+          <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+            <label style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px',
+              cursor: 'pointer',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              background: temDoencasPreExistentes ? '#e8f5e8' : 'transparent',
+              border: `2px solid ${temDoencasPreExistentes ? '#28a745' : '#e8ecef'}`,
+              transition: 'all 0.3s ease'
+            }}>
+              <input
+                type="checkbox"
+                checked={temDoencasPreExistentes}
+                onChange={(e) => {
+                  setTemDoencasPreExistentes(e.target.checked);
+                  if (!e.target.checked) {
+                    setDoencasPreExistentes('');
+                  }
+                }}
+                style={{ 
+                  width: '18px', 
+                  height: '18px',
+                  accentColor: '#28a745'
+                }}
+              />
+              <span style={{ fontWeight: '500', color: temDoencasPreExistentes ? '#28a745' : '#6c757d' }}>
+                ✅ Sim, tenho doenças pré-existentes
+              </span>
+            </label>
+          </div>
+
+          {temDoencasPreExistentes && (
+            <textarea
+              className="form-input"
+              placeholder="Ex: diabetes, hipertensão, asma, problemas cardíacos..."
+              value={doencasPreExistentes}
+              onChange={(e) => setDoencasPreExistentes(e.target.value)}
+              rows="2"
+              style={{ 
+                resize: 'vertical', 
+                minHeight: '60px',
+                animation: 'fadeIn 0.3s ease',
+                border: '2px solid #9b59b6'
               }}
             />
           )}
