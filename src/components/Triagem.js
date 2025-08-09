@@ -180,7 +180,7 @@ const Triagem = () => {
               }}>
                 🤒
               </div>
-              O que você está entindo?
+              O que você está sentindo?
             </span>
           </div>
 
