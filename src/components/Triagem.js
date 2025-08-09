@@ -10,6 +10,7 @@ const Triagem = () => {
   const [temIntolerancia, setTemIntolerancia] = useState(false);
   const [doencasPreExistentes, setDoencasPreExistentes] = useState('');
   const [temDoencasPreExistentes, setTemDoencasPreExistentes] = useState(false);
+  const [contatoEmergencia, setContatoEmergencia] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
@@ -94,6 +95,29 @@ const Triagem = () => {
     }
   };
 
+  // Função para formatar o número de telefone
+  const formatarTelefone = (valor) => {
+    // Remove tudo que não é número
+    const apenasNumeros = valor.replace(/\D/g, '');
+    
+    // Se não tem números, retorna vazio
+    if (apenasNumeros.length === 0) return '';
+    
+    // Aplica a formatação gradual conforme digita
+    if (apenasNumeros.length <= 2) {
+      return `(${apenasNumeros}`;
+    } else if (apenasNumeros.length <= 7) {
+      return `(${apenasNumeros.slice(0, 2)}) ${apenasNumeros.slice(2)}`;
+    } else {
+      return `(${apenasNumeros.slice(0, 2)}) ${apenasNumeros.slice(2, 7)}-${apenasNumeros.slice(7, 11)}`;
+    }
+  };
+
+  const handleContatoChange = (e) => {
+    const valorFormatado = formatarTelefone(e.target.value);
+    setContatoEmergencia(valorFormatado);
+  };
+
     const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -101,31 +125,6 @@ const Triagem = () => {
     if (!sintomas && !audioBlob) {
       alert('Por favor, descreva seus sintomas por texto ou áudio.');
       return;
-    }
-    
-    // Calcula a prioridade baseada nos sintomas informados
-    let prioridade = 'verde'; // Baixa prioridade por padrão
-    let tempoEstimado = '40:00';
-    
-    const sintomasTexto = sintomas.toLowerCase();
-    
-    // Lógica simples de triagem baseada em palavras-chave
-    if (sintomasTexto.includes('dor no peito') || 
-        sintomasTexto.includes('falta de ar') || 
-        sintomasTexto.includes('desmaio') ||
-        sintomasTexto.includes('sangramento')) {
-      prioridade = 'vermelho';
-      tempoEstimado = '05:00';
-    } else if (sintomasTexto.includes('febre alta') || 
-               sintomasTexto.includes('dor intensa') ||
-               sintomasTexto.includes('vomito')) {
-      prioridade = 'amarelo';
-      tempoEstimado = '20:00';
-    } else if (sintomasTexto.includes('febre') || 
-               sintomasTexto.includes('dor') ||
-               sintomasTexto.includes('tontura')) {
-      prioridade = 'azul';
-      tempoEstimado = '30:00';
     }
 
     // Salva os dados da triagem
@@ -136,8 +135,7 @@ const Triagem = () => {
       alergias,
       intolerancia,
       doencasPreExistentes,
-      prioridade,
-      tempoEstimado,
+      contatoEmergencia,
       timestamp: new Date().toISOString()
     };
     
@@ -411,6 +409,45 @@ const Triagem = () => {
               boxSizing: 'border-box'
             }}
             onFocus={(e) => e.target.style.borderColor = '#6c63ff'}
+            onBlur={(e) => e.target.style.borderColor = '#e8ecef'}
+          />
+        </div>
+
+        <div className="form-group">
+          <div className="question-text">
+            <span style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+              <div style={{ 
+                fontSize: '24px',
+                background: 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)',
+                borderRadius: '12px',
+                padding: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                📞
+              </div>
+              Contato de emergência
+            </span>
+          </div>
+          
+          <input
+            type="tel"
+            className="form-input"
+            placeholder="(99) 99999-9999"
+            value={contatoEmergencia}
+            onChange={handleContatoChange}
+            maxLength="15"
+            style={{
+              width: '100%',
+              padding: '12px 16px',
+              borderRadius: '12px',
+              border: '2px solid #e8ecef',
+              fontSize: '16px',
+              transition: 'border-color 0.3s ease',
+              boxSizing: 'border-box'
+            }}
+            onFocus={(e) => e.target.style.borderColor = '#e74c3c'}
             onBlur={(e) => e.target.style.borderColor = '#e8ecef'}
           />
         </div>
