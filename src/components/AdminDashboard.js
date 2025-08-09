@@ -12,13 +12,13 @@ const AdminDashboard = () => {
       idade: 45,
       sexo: 'F',
       prioridade: 'ALTA',
-      cor: '#ff4757', // Vermelho - alta prioridade
+      cor: '#ff6b35', // Laranja-vermelho - alta prioridade
       entrada: '2024-01-15 08:30',
-      sintomas: 'Dor no peito, falta de ar',
-      alergias: ['Penicilina', 'Dipirona'],
-      intolerancia: ['Lactose'],
-      temAlergias: true,
-      temIntolerancia: true,
+      sintomas: 'Tô com dor no peito e falta de ar',
+              alergias: [],
+        intolerancia: [],
+        temAlergias: false,
+        temIntolerancia: false,
       status: 'Aguardando consulta',
       medico: 'Dr. João Cardiologista',
       setor: 'Cardiologia'
@@ -31,11 +31,11 @@ const AdminDashboard = () => {
       prioridade: 'CRÍTICA',
       cor: '#ff3838', // Vermelho escuro - crítica
       entrada: '2024-01-15 09:15',
-      sintomas: 'Infarto agudo do miocárdio',
-      alergias: ['AAS', 'Contraste iodado'],
-      intolerancia: [],
-      temAlergias: true,
-      temIntolerancia: false,
+      sintomas: 'Dor muito forte no peito que não passa',
+              alergias: ['Amendoim'],
+        intolerancia: [],
+        temAlergias: true,
+        temIntolerancia: false,
       status: 'Em atendimento',
       medico: 'Dr. Ana Emergencista',
       setor: 'UTI'
@@ -48,11 +48,11 @@ const AdminDashboard = () => {
       prioridade: 'MÉDIA',
       cor: '#ffa502', // Laranja - média prioridade
       entrada: '2024-01-15 10:00',
-      sintomas: 'Febre, tosse seca',
-      alergias: [],
-      intolerancia: ['Glúten', 'Frutos do mar'],
-      temAlergias: false,
-      temIntolerancia: true,
+      sintomas: 'Tô com febre e uma tosse seca que não para',
+              alergias: [],
+        intolerancia: [],
+        temAlergias: false,
+        temIntolerancia: false,
       status: 'Aguardando exames',
       medico: 'Dr. Pedro Clínico',
       setor: 'Clínica Médica'
@@ -65,7 +65,7 @@ const AdminDashboard = () => {
       prioridade: 'BAIXA',
       cor: '#2ed573', // Verde - baixa prioridade
       entrada: '2024-01-15 10:30',
-      sintomas: 'Dor de cabeça leve',
+      sintomas: 'Dor de cabeça que não passa com remédio',
       alergias: [],
       intolerancia: [],
       temAlergias: false,
@@ -80,13 +80,13 @@ const AdminDashboard = () => {
       idade: 78,
       sexo: 'F',
       prioridade: 'ALTA',
-      cor: '#ff4757',
+      cor: '#ff6b35',
       entrada: '2024-01-15 11:00',
-      sintomas: 'Confusão mental, hipotensão',
-      alergias: ['Morfina', 'Sulfa'],
-      intolerancia: ['Lactose'],
-      temAlergias: true,
-      temIntolerancia: true,
+      sintomas: 'Tô meio confusa e com tontura',
+              alergias: [],
+        intolerancia: ['Lactose'],
+        temAlergias: false,
+        temIntolerancia: true,
       status: 'Em atendimento',
       medico: 'Dr. Carlos Geriatra',
       setor: 'Geriatria'
@@ -99,11 +99,11 @@ const AdminDashboard = () => {
       prioridade: 'MÉDIA',
       cor: '#ffa502',
       entrada: '2024-01-15 11:30',
-      sintomas: 'Fratura no braço direito',
-      alergias: ['Látex'],
-      intolerancia: [],
-      temAlergias: true,
-      temIntolerancia: false,
+      sintomas: 'Quebrei o braço, tá doendo muito',
+              alergias: [],
+        intolerancia: [],
+        temAlergias: false,
+        temIntolerancia: false,
       status: 'Aguardando cirurgia',
       medico: 'Dr. Rafael Ortopedista',
       setor: 'Ortopedia'
@@ -116,11 +116,11 @@ const AdminDashboard = () => {
       prioridade: 'BAIXA',
       cor: '#2ed573',
       entrada: '2024-01-15 12:00',
-      sintomas: 'Consulta de rotina, hipertensão',
-      alergias: [],
-      intolerancia: ['Camarão', 'Amendoim'],
-      temAlergias: false,
-      temIntolerancia: true,
+      sintomas: 'Vim fazer os exames de rotina, pressão alta',
+              alergias: [],
+        intolerancia: [],
+        temAlergias: false,
+        temIntolerancia: false,
       status: 'Aguardando consulta',
       medico: 'Dra. Isabel Cardiologista',
       setor: 'Cardiologia'
@@ -133,21 +133,87 @@ const AdminDashboard = () => {
       prioridade: 'CRÍTICA',
       cor: '#ff3838',
       entrada: '2024-01-15 12:30',
-      sintomas: 'AVC isquêmico',
-      alergias: ['Heparina'],
-      intolerancia: [],
-      temAlergias: true,
-      temIntolerancia: false,
+      sintomas: 'Não consigo mover o lado direito do corpo',
+              alergias: ['Picada de abelha'],
+        intolerancia: [],
+        temAlergias: true,
+        temIntolerancia: false,
       status: 'Em cirurgia',
       medico: 'Dr. Marcos Neurocirurgião',
       setor: 'Neurocirurgia'
+    },
+    {
+      id: 'PUL009',
+      paciente: 'Sandra Lima',
+      idade: 33,
+      sexo: 'F',
+      prioridade: 'MÉDIA',
+      cor: '#ffa502',
+      entrada: '2024-01-15 13:00',
+      sintomas: 'Tô vomitando muito e com dor na barriga',
+              alergias: [],
+        intolerancia: [],
+        temAlergias: false,
+        temIntolerancia: false,
+      status: 'Aguardando consulta',
+      medico: 'Dr. Felipe Gastro',
+      setor: 'Gastroenterologia'
+    },
+    {
+      id: 'PUL010',
+      paciente: 'Antônio Silva',
+      idade: 67,
+      sexo: 'M',
+      prioridade: 'BAIXA',
+      cor: '#2ed573',
+      entrada: '2024-01-15 13:30',
+      sintomas: 'Dor nas costas que começou ontem',
+              alergias: [],
+        intolerancia: ['Glúten'],
+        temAlergias: false,
+        temIntolerancia: true,
+      status: 'Aguardando consulta',
+      medico: 'Dra. Rita Ortopedista',
+      setor: 'Ortopedia'
+    },
+    {
+      id: 'PUL011',
+      paciente: 'Juliana Santos',
+      idade: 19,
+      sexo: 'F',
+      prioridade: 'ALTA',
+      cor: '#ff6b35',
+      entrada: '2024-01-15 14:00',
+      sintomas: 'Não consigo respirar direito, parece que vai dar ataque',
+      alergias: [],
+      intolerancia: [],
+      temAlergias: false,
+      temIntolerancia: false,
+      status: 'Em atendimento',
+      medico: 'Dr. Luis Pneumologista',
+      setor: 'Pneumologia'
+    },
+    {
+      id: 'PUL012',
+      paciente: 'Carlos Eduardo',
+      idade: 44,
+      sexo: 'M',
+      prioridade: 'BAIXA',
+      cor: '#2ed573',
+      entrada: '2024-01-15 14:30',
+      sintomas: 'Machucei o pé jogando bola, tá inchado',
+      alergias: [],
+      intolerancia: [],
+      temAlergias: false,
+      temIntolerancia: false,
+      status: 'Aguardando exames',
+      medico: 'Dr. Marcelo Ortopedista',
+      setor: 'Ortopedia'
     }
   ]);
 
   const [filtros, setFiltros] = useState({
     prioridade: '',
-    setor: '',
-    status: '',
     temAlergias: '',
     temIntolerancia: '',
     busca: ''
@@ -165,12 +231,6 @@ const AdminDashboard = () => {
     // Aplicar filtros
     if (filtros.prioridade) {
       resultado = resultado.filter(p => p.prioridade === filtros.prioridade);
-    }
-    if (filtros.setor) {
-      resultado = resultado.filter(p => p.setor === filtros.setor);
-    }
-    if (filtros.status) {
-      resultado = resultado.filter(p => p.status === filtros.status);
     }
     if (filtros.temAlergias !== '') {
       resultado = resultado.filter(p => p.temAlergias === (filtros.temAlergias === 'true'));
@@ -218,8 +278,6 @@ const AdminDashboard = () => {
   const limparFiltros = () => {
     setFiltros({
       prioridade: '',
-      setor: '',
-      status: '',
       temAlergias: '',
       temIntolerancia: '',
       busca: ''
@@ -270,33 +328,9 @@ const AdminDashboard = () => {
             <option value="BAIXA">🟢 Baixa</option>
           </select>
 
-          <select
-            value={filtros.setor}
-            onChange={(e) => setFiltros(prev => ({...prev, setor: e.target.value}))}
-            style={styles.filterSelect}
-          >
-            <option value="">Todos os Setores</option>
-            <option value="UTI">UTI</option>
-            <option value="Cardiologia">Cardiologia</option>
-            <option value="Neurologia">Neurologia</option>
-            <option value="Ortopedia">Ortopedia</option>
-            <option value="Clínica Médica">Clínica Médica</option>
-            <option value="Geriatria">Geriatria</option>
-            <option value="Neurocirurgia">Neurocirurgia</option>
-          </select>
 
-          <select
-            value={filtros.status}
-            onChange={(e) => setFiltros(prev => ({...prev, status: e.target.value}))}
-            style={styles.filterSelect}
-          >
-            <option value="">Todos os Status</option>
-            <option value="Aguardando consulta">Aguardando consulta</option>
-            <option value="Em atendimento">Em atendimento</option>
-            <option value="Aguardando exames">Aguardando exames</option>
-            <option value="Aguardando cirurgia">Aguardando cirurgia</option>
-            <option value="Em cirurgia">Em cirurgia</option>
-          </select>
+
+
         </div>
 
         <div style={styles.filterRow}>
@@ -345,12 +379,6 @@ const AdminDashboard = () => {
               </th>
               <th style={styles.th}>Sintomas</th>
               <th style={styles.th}>Alergias/Intolerâncias</th>
-              <th style={styles.th} onClick={() => handleOrdenacao('status')}>
-                Status {ordenacao.campo === 'status' && (ordenacao.direcao === 'asc' ? '↑' : '↓')}
-              </th>
-              <th style={styles.th} onClick={() => handleOrdenacao('setor')}>
-                Setor {ordenacao.campo === 'setor' && (ordenacao.direcao === 'asc' ? '↑' : '↓')}
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -406,19 +434,6 @@ const AdminDashboard = () => {
                       <span style={styles.noAllergies}>✅ Sem restrições</span>
                     )}
                   </div>
-                </td>
-                <td style={styles.td}>
-                  <span style={styles.statusBadge}>
-                    {pulseira.status}
-                  </span>
-                  <div style={styles.doctorInfo}>
-                    <small>{pulseira.medico}</small>
-                  </div>
-                </td>
-                <td style={styles.td}>
-                  <span style={styles.sectorBadge}>
-                    {pulseira.setor}
-                  </span>
                 </td>
               </tr>
             ))}
@@ -613,26 +628,8 @@ const styles = {
     fontSize: '12px',
     fontWeight: 'bold'
   },
-  statusBadge: {
-    backgroundColor: '#3498db',
-    color: 'white',
-    padding: '6px 10px',
-    borderRadius: '12px',
-    fontSize: '12px',
-    fontWeight: 'bold'
-  },
-  doctorInfo: {
-    marginTop: '5px',
-    color: '#666'
-  },
-  sectorBadge: {
-    backgroundColor: '#9b59b6',
-    color: 'white',
-    padding: '6px 10px',
-    borderRadius: '12px',
-    fontSize: '12px',
-    fontWeight: 'bold'
-  },
+
+
   noResults: {
     textAlign: 'center',
     padding: '50px',
