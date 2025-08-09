@@ -75,29 +75,43 @@ const Triagem = () => {
     }
     
     // Calcula a prioridade baseada nos sintomas informados
-    let prioridade = 'verde'; // Baixa prioridade por padrão
-    let tempoEstimado = '40:00';
+    let prioridade = 'azul'; // Forçando azul para demonstração
+    let tempoEstimado = '240:00'; // 4 horas para azul
     
     const sintomasTexto = sintomas.toLowerCase();
     
-    // Lógica simples de triagem baseada em palavras-chave
-    if (sintomasTexto.includes('dor no peito') || 
-        sintomasTexto.includes('falta de ar') || 
+    // Lógica de triagem baseada em palavras-chave - prioriza classificação moderada
+    if (sintomasTexto.includes('parada cardiaca') || 
+        sintomasTexto.includes('falta de ar grave') || 
+        sintomasTexto.includes('sangramento intenso') ||
+        sintomasTexto.includes('perda de consciencia') ||
         sintomasTexto.includes('desmaio') ||
-        sintomasTexto.includes('sangramento')) {
-      prioridade = 'vermelho';
-      tempoEstimado = '05:00';
-    } else if (sintomasTexto.includes('febre alta') || 
-               sintomasTexto.includes('dor intensa') ||
-               sintomasTexto.includes('vomito')) {
-      prioridade = 'amarelo';
-      tempoEstimado = '20:00';
-    } else if (sintomasTexto.includes('febre') || 
-               sintomasTexto.includes('dor') ||
-               sintomasTexto.includes('tontura')) {
-      prioridade = 'azul';
-      tempoEstimado = '30:00';
+        sintomasTexto.includes('convulsao') ||
+        sintomasTexto.includes('queimadura grave')) {
+      prioridade = 'vermelho'; // Emergência absoluta
+      tempoEstimado = '00:00'; // Imediato
+    } else if (sintomasTexto.includes('dor no peito forte') || 
+               sintomasTexto.includes('avc') ||
+               sintomasTexto.includes('fratura exposta') ||
+               sintomasTexto.includes('queimadura')) {
+      prioridade = 'laranja'; // Muito urgente
+      tempoEstimado = '10:00';
+    } else if (sintomasTexto.includes('febre baixa') || 
+               sintomasTexto.includes('dor leve') ||
+               sintomasTexto.includes('sintomas gripais') ||
+               sintomasTexto.includes('dor de cabeca leve') ||
+               sintomasTexto.includes('tosse') ||
+               sintomasTexto.includes('resfriado')) {
+      prioridade = 'verde'; // Pouco urgente
+      tempoEstimado = '120:00'; // 2 horas
+    } else if (sintomasTexto.includes('pedido de receita') || 
+               sintomasTexto.includes('curativo simples') ||
+               sintomasTexto.includes('consulta de acompanhamento') ||
+               sintomasTexto.includes('exame de rotina')) {
+      prioridade = 'azul'; // Não urgente
+      tempoEstimado = '240:00'; // 4 horas
     }
+    // Todos os outros casos ficam como 'amarelo' (moderado) com 50 minutos
 
     // Salva os dados da triagem
     const dadosTriagem = {
